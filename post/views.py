@@ -35,7 +35,7 @@ def product_view(request):
     if request.method == 'GET':
         products = Product.objects.all()
 
-        context = {products: products}
+        context = {"products": products}
 
         return render(request, 'product/product_list.html', context)
 
@@ -47,7 +47,7 @@ def product_detale_view(request, product_id):
         except Product.DoesNotExist:
             return HttpResponse('Product not found', status=404)
 
-        context = {products: products}
+        context = {"products": products}
 
 
         return render(request, 'product/product_detale.html', context)
