@@ -1,7 +1,9 @@
+from itertools import product
+
 from django.shortcuts import render, HttpResponse
 import random
 from datetime import datetime
-
+from .models import Product
 # Create your views here.
 
 
@@ -28,3 +30,24 @@ def home_view(request):
 def fun_view(request):
     if request.method == 'GET':
         return HttpResponse( random_joke)
+
+def product_view(request):
+    if request.method == 'GET':
+        products = Product.objects.all()
+
+        context = {products: products}
+
+        return render(request, 'product/product_list.html', context)
+
+
+def product_detale_view(request, product_id):
+    if request.method == 'GET':
+        try:
+            products = Product.objects.first()
+        except Product.DoesNotExist:
+            return HttpResponse('Product not found', status=404)
+
+        context = {products: products}
+
+
+        return render(request, 'product/product_detale.html', context)
